@@ -11,6 +11,10 @@ const signUp: RequestHandler = async (req: Request, res: Response) => {
       data: result,
     })
   } catch (error) {
+    res.send({
+        error
+    })
+    console.log(error);
     throw new Error('Something went wrong')
   }
 }
