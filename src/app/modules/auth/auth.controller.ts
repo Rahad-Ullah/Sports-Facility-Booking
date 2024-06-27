@@ -1,6 +1,6 @@
 import { Request, RequestHandler, Response } from 'express'
 import { AuthServices } from './auth.service'
-import { catchAsync } from '../../utils/catchAsync'
+import catchAsync from '../../utils/catchAsync'
 
 const signUp: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
