@@ -1,8 +1,9 @@
 import { Request, RequestHandler, Response } from 'express'
 import { AuthServices } from './auth.service'
+import { catchAsync } from '../../utils/catchAsync'
 
-const signUp: RequestHandler = async (req: Request, res: Response) => {
-  try {
+const signUp: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
     const result = await AuthServices.signUpUserIntoDB(req.body)
 
     res.status(200).json({
@@ -10,14 +11,8 @@ const signUp: RequestHandler = async (req: Request, res: Response) => {
       message: 'Signup successful',
       data: result,
     })
-  } catch (error) {
-    res.send({
-        error
-    })
-    console.log(error);
-    throw new Error('Something went wrong')
-  }
-}
+  },
+)
 
 export const AuthControllers = {
   signUp,
