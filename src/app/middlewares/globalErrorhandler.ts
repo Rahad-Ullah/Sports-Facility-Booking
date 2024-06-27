@@ -12,6 +12,7 @@ import AppError from '../errors/AppError'
 import handleZodError from '../errors/handleZodError'
 import handleValidationError from '../errors/handleValidationError'
 import handleDuplicateError from '../errors/handleDuplicateError'
+import handleCastError from '../errors/handleCastError'
 
 const globalErrorhandler = (
   err: any,
@@ -36,6 +37,11 @@ const globalErrorhandler = (
     errorSources = simplifiedError?.errorSources
   } else if (err?.name === 'ValidationError') {
     const simplifiedError = handleValidationError(err)
+    statusCode = simplifiedError?.statusCode
+    message = simplifiedError?.message
+    errorSources = simplifiedError?.errorSources
+  } else if (err?.name === 'CastError') {
+    const simplifiedError = handleCastError(err)
     statusCode = simplifiedError?.statusCode
     message = simplifiedError?.message
     errorSources = simplifiedError?.errorSources
