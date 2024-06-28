@@ -8,6 +8,13 @@ import config from '../../config'
 
 // sign-up
 const signUpUserIntoDB = async (payload: TUser) => {
+  const { email } = payload
+  // check if the user already exist
+  const user = await User.findOne({ email })
+  if (user) {
+    throw new AppError(httpStatus.CONFLICT, 'User already registered')
+  }
+
   const result = await User.create(payload)
   return {
     _id: result?._id,
@@ -18,6 +25,9 @@ const signUpUserIntoDB = async (payload: TUser) => {
     address: result?.address,
   }
 }
+
+
+
 
 // login
 const loginUserIntoDB = async (payload: TUser) => {
