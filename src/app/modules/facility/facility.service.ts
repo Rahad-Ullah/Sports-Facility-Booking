@@ -26,7 +26,17 @@ const updateFacilityIntoDB = async (id: string, payload: TFacility) => {
     throw new AppError(httpStatus.NOT_FOUND, 'This facility not found')
   }
 
-  const result = await Facility.findByIdAndUpdate(id, payload)
+  const result = await Facility.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  })
+
+  return result
+}
+
+//  retrieve all facilities from DB
+const getAllFacilitiesFromDB = async () => {
+  const result = await Facility.find()
 
   return result
 }
@@ -34,4 +44,5 @@ const updateFacilityIntoDB = async (id: string, payload: TFacility) => {
 export const FacilityServices = {
   createFacilityIntoDB,
   updateFacilityIntoDB,
+  getAllFacilitiesFromDB,
 }

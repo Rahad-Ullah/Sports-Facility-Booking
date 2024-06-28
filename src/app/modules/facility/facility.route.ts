@@ -22,4 +22,7 @@ router.put(
   FacilityControllers.updateFacility,
 )
 
+// retrieve all facilities
+router.get('/', FacilityControllers.getAllFacilities)
+
 export const FacilityRoutes = router

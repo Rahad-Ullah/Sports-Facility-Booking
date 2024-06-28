@@ -34,7 +34,22 @@ const updateFacility: RequestHandler = catchAsync(
   },
 )
 
+// retrieve all facilties
+const getAllFacilities: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await FacilityServices.getAllFacilitiesFromDB()
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Facilities retrieved successfully',
+      data: result,
+    })
+  },
+)
+
 export const FacilityControllers = {
   createFacility,
   updateFacility,
+  getAllFacilities,
 }
