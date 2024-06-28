@@ -22,6 +22,9 @@ router.put(
   FacilityControllers.updateFacility,
 )
 
+// delete facility
+router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility)
+
 // retrieve all facilities
 router.get('/', FacilityControllers.getAllFacilities)
 

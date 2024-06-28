@@ -23,13 +23,30 @@ const updateFacilityIntoDB = async (id: string, payload: TFacility) => {
   // check if the facility exist
   const isFacilityExist = await Facility.findById(id)
   if (!isFacilityExist) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This facility not found')
+    throw new AppError(httpStatus.NOT_FOUND, 'No Data Found')
   }
 
   const result = await Facility.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,
   })
+
+  return result
+}
+
+// delete facility from DB
+const deleteFacilityIntoDB = async (id: string) => {
+  // check if the facility exist
+  const isFacilityExist = await Facility.findById(id)
+  if (!isFacilityExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'No Data Found')
+  }
+
+  const result = await Facility.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  )
 
   return result
 }
@@ -45,4 +62,5 @@ export const FacilityServices = {
   createFacilityIntoDB,
   updateFacilityIntoDB,
   getAllFacilitiesFromDB,
+  deleteFacilityIntoDB,
 }

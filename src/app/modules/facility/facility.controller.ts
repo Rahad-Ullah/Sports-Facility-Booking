@@ -34,6 +34,22 @@ const updateFacility: RequestHandler = catchAsync(
   },
 )
 
+// delete faciltiy
+const deleteFacility: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const result = await FacilityServices.deleteFacilityIntoDB(id)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Facility deleted successfully',
+      data: result,
+    })
+  },
+)
+
 // retrieve all facilties
 const getAllFacilities: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
@@ -52,4 +68,5 @@ export const FacilityControllers = {
   createFacility,
   updateFacility,
   getAllFacilities,
+  deleteFacility,
 }
