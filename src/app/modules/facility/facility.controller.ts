@@ -55,6 +55,15 @@ const getAllFacilities: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await FacilityServices.getAllFacilitiesFromDB()
 
+    if (!result.length) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.NOT_FOUND,
+        message: 'No Data Found',
+        data: result,
+      })
+    }
+
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
