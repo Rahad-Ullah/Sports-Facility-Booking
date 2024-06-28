@@ -14,4 +14,12 @@ router.post(
   FacilityControllers.createFacility,
 )
 
+// update facility
+router.put(
+  '/:id',
+  auth('admin'),
+  validateRequest(facilityValidation.updateFacilityValidationSchema),
+  FacilityControllers.updateFacility,
+)
+
 export const FacilityRoutes = router

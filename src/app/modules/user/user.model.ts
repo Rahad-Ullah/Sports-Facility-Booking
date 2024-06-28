@@ -1,12 +1,11 @@
 import { Schema, model } from 'mongoose'
 import { TUser } from './user.interface'
-import { role } from './user.constant'
 import config from '../../config'
 import bcrypt from 'bcrypt'
 
 const userSchema = new Schema<TUser>({
   name: {
-    type: 'String',
+    type: String,
     required: true,
   },
   email: {
@@ -21,7 +20,8 @@ const userSchema = new Schema<TUser>({
   },
   role: {
     type: String,
-    enum: role,
+    enum: ['user', 'admin'],
+    default: 'user',
     required: true,
   },
   phone: {

@@ -18,6 +18,23 @@ const createFacility: RequestHandler = catchAsync(
   },
 )
 
+// update faciltiy
+const updateFacility: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const result = await FacilityServices.updateFacilityIntoDB(id, req.body)
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Facility updated successfully',
+      data: result,
+    })
+  },
+)
+
 export const FacilityControllers = {
   createFacility,
+  updateFacility,
 }

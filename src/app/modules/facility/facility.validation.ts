@@ -10,6 +10,21 @@ const createFacilityValidationSchema = z.object({
   }),
 })
 
+// validation for updating existing facility
+const updateFacilityValidationSchema = z.object({
+  body: z.object({
+    name: z.string({ required_error: 'Name is required.' }).optional(),
+    description: z
+      .string({ required_error: 'Description is required.' })
+      .optional(),
+    pricePerHour: z
+      .number({ required_error: 'PricePerHour is required.' })
+      .optional(),
+    location: z.string({ required_error: 'Location is required.' }).optional(),
+  }),
+})
+
 export const facilityValidation = {
   createFacilityValidationSchema,
+  updateFacilityValidationSchema,
 }

@@ -18,6 +18,20 @@ const createFacilityIntoDB = async (payload: TFacility) => {
   return result
 }
 
+// update facility into DB
+const updateFacilityIntoDB = async (id: string, payload: TFacility) => {
+  // check if the facility exist
+  const isFacilityExist = await Facility.findById(id)
+  if (!isFacilityExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This facility not found')
+  }
+
+  const result = await Facility.findByIdAndUpdate(id, payload)
+
+  return result
+}
+
 export const FacilityServices = {
   createFacilityIntoDB,
+  updateFacilityIntoDB,
 }

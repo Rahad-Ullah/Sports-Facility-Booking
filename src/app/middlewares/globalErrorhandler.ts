@@ -5,9 +5,6 @@ import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 import { TErrorSources } from '../interface/error'
 import config from '../config'
-// import handleValidationError from '../errors/handleValidationError';
-// import handleCastError from '../errors/handleCastError';
-// import handleDuplicateError from '../errors/handleDuplicateError';
 import AppError from '../errors/AppError'
 import handleZodError from '../errors/handleZodError'
 import handleValidationError from '../errors/handleValidationError'
