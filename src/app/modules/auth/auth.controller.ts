@@ -23,9 +23,9 @@ const signUp: RequestHandler = catchAsync(
 const login: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await AuthServices.loginUserIntoDB(req.body)
-    const { token, ...user } = result
+    const { accessToken, userResponse: user } = result
 
-    res.cookie('accessToken', token, {
+    res.cookie('accessToken', accessToken, {
       secure: config.NODE_ENV === 'production',
       httpOnly: true,
     })
@@ -34,7 +34,7 @@ const login: RequestHandler = catchAsync(
       success: true,
       statusCode: httpStatus.OK,
       message: 'User logged in successfully',
-      token: token,
+      token: accessToken,
       data: user,
     })
   },

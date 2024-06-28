@@ -16,18 +16,16 @@ const signUpUserIntoDB = async (payload: TUser) => {
   }
 
   const result = await User.create(payload)
-  return {
-    _id: result?._id,
-    name: result?.name,
-    email: result?.email,
-    role: result?.role,
-    phone: result?.phone,
-    address: result?.address,
+
+  // send response without password
+  const userResponse = {
+    ...result.toObject(),
+    password: undefined,
   }
+  delete userResponse.password
+
+  return userResponse
 }
-
-
-
 
 // login
 const loginUserIntoDB = async (payload: TUser) => {
@@ -57,14 +55,16 @@ const loginUserIntoDB = async (payload: TUser) => {
     config.jwt_access_expires_in as string,
   )
 
+  // send response without password
+  const userResponse = {
+    ...user.toObject(),
+    password: undefined,
+  }
+  delete userResponse.password
+
   return {
-    _id: user?._id,
-    name: user?.name,
-    email: user?.email,
-    role: user?.role,
-    phone: user?.phone,
-    address: user?.address,
-    token: accessToken,
+    userResponse,
+    accessToken,
   }
 }
 
