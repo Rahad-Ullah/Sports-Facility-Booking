@@ -74,8 +74,25 @@ const getBookingsByUserFromDB = async (user: string) => {
   return result
 }
 
+// cancel booking
+const cancelBookingFromDB = async (id: string) => {
+  // check if the booking is exist
+  const isBookingExist = await Booking.findById(id)
+  if (!isBookingExist) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'This booking is not exist')
+  }
+
+  const result = await Booking.findByIdAndUpdate(
+    id,
+    { isBooked: 'canceled' },
+    { new: true },
+  ).populate('facility')
+  return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
   getBookingsByUserFromDB,
   getAllBookingsFromDB,
+  cancelBookingFromDB,
 }
