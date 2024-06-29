@@ -5,6 +5,7 @@ import AppError from '../errors/AppError'
 import httpStatus from 'http-status'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../config'
+import { User } from '../modules/user/user.model'
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +24,16 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload
 
-    const { role } = decoded
+    const { email, role } = decoded
+
+    // check if the user exist
+    const user = await User.findOne({ email })
+    if (!user) {
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You have no access to this route',
+      )
+    }
 
     // check user role and authorize
     if (requiredRoles && !requiredRoles.includes(role)) {
@@ -34,7 +44,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     // decoded
-    req.user = decoded as JwtPayload
+    req.user = user
 
     next()
   })
