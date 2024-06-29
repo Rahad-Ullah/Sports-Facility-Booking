@@ -7,7 +7,7 @@ const router = Router()
 // create new facility
 router.post('/', auth('user'), BookingControllers.createBooking)
 
-// retrieve all facilities
-// router.get('/', FacilityControllers.getAllFacilities)
+// retrieve all bookings
+router.get('/', auth('admin'), BookingControllers.getAllBookings)
 
 export const BookingRoutes = router

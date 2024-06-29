@@ -8,7 +8,7 @@ import { BookingServices } from './booking.service'
 const createBooking: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const user = req.user
-    
+
     const result = await BookingServices.createBookingIntoDB(user, req.body)
 
     sendResponse(res, {
@@ -20,6 +20,30 @@ const createBooking: RequestHandler = catchAsync(
   },
 )
 
+// retrieve all bookings
+const getAllBookings: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const result = await BookingServices.getAllBookingsFromDB()
+
+    if (!result.length) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.NOT_FOUND,
+        message: 'No Data Found',
+        data: result,
+      })
+    }
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Bookings retrieved successfully',
+      data: result,
+    })
+  },
+)
+
 export const BookingControllers = {
   createBooking,
+  getAllBookings,
 }

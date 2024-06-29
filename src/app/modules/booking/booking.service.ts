@@ -23,7 +23,7 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
     startTime,
     endTime,
   })
-  if(isTimeSlotAvailable){
+  if (isTimeSlotAvailable) {
     throw new AppError(httpStatus.CONFLICT, 'Time slot is not available')
   }
 
@@ -45,6 +45,13 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
   return result
 }
 
+// retrieve all bookings
+const getAllBookingsFromDB = async () => {
+  const result = await Booking.find().populate('user').populate('facility')
+  return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
+  getAllBookingsFromDB,
 }
