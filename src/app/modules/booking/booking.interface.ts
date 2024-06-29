@@ -9,3 +9,9 @@ export type TBooking = {
   payableAmount: number
   isBooked: 'confirmed' | 'unconfirmed' | 'canceled'
 }
+
+export type TTimeSlot = {
+  date: string
+  startTime: string
+  endTime: string
+}

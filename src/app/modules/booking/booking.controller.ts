@@ -43,7 +43,33 @@ const getAllBookings: RequestHandler = catchAsync(
   },
 )
 
+// retrieve bookings by specific user
+const getBookingsByUser: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { user } = req.params
+
+    const result = await BookingServices.getBookingsByUserFromDB(user)
+
+    if (!result.length) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.NOT_FOUND,
+        message: 'No Data Found',
+        data: result,
+      })
+    }
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Bookings retrieved successfully',
+      data: result,
+    })
+  },
+)
+
 export const BookingControllers = {
   createBooking,
+  getBookingsByUser,
   getAllBookings,
 }

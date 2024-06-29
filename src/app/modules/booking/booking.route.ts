@@ -1,11 +1,21 @@
 import { Router } from 'express'
 import { BookingControllers } from './booking.controller'
 import auth from '../../middlewares/auth'
+import validateRequest from '../../middlewares/validateRequest'
+import { bookingValidation } from './booking.validation'
 
 const router = Router()
 
 // create new facility
-router.post('/', auth('user'), BookingControllers.createBooking)
+router.post(
+  '/',
+  auth('user'),
+  validateRequest(bookingValidation.createBookingValidationSchema),
+  BookingControllers.createBooking,
+)
+
+// retrieve bookings by specific user
+router.get('/:user', auth('user'), BookingControllers.getBookingsByUser)
 
 // retrieve all bookings
 router.get('/', auth('admin'), BookingControllers.getAllBookings)

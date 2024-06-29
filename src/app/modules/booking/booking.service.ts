@@ -4,7 +4,11 @@ import { Booking } from './booking.model'
 import { Facility } from '../facility/facility.model'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
-import calculatePayableAmout from './booking.utils'
+import {
+  calculatePayableAmout,
+  isEndTimeBeforeStartTime,
+  isTimeSlotAvailable,
+} from './booking.utils'
 
 // create new bookin into DB
 const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
@@ -16,14 +20,27 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
     throw new AppError(httpStatus.BAD_REQUEST, 'This facility is not exist')
   }
 
+  // check if end time before start time
+  if (isEndTimeBeforeStartTime(startTime, endTime)) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'StartTime should be before EndTime',
+    )
+  }
+
   // check if the time slot is available
-  const isTimeSlotAvailable = await Booking.findOne({
+  const assignedTimeSlots = await Booking.find({
     facility,
+    date,
+  }).select('date startTime endTime')
+
+  const newTimeSlot = {
     date,
     startTime,
     endTime,
-  })
-  if (isTimeSlotAvailable) {
+  }
+
+  if (isTimeSlotAvailable(assignedTimeSlots, newTimeSlot)) {
     throw new AppError(httpStatus.CONFLICT, 'Time slot is not available')
   }
 
@@ -51,7 +68,14 @@ const getAllBookingsFromDB = async () => {
   return result
 }
 
+// retrieve bookings by user
+const getBookingsByUserFromDB = async (user: string) => {
+  const result = await Booking.find({ user }).populate('facility')
+  return result
+}
+
 export const BookingServices = {
   createBookingIntoDB,
+  getBookingsByUserFromDB,
   getAllBookingsFromDB,
 }
