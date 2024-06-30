@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { AuthRoutes } from '../modules/auth/auth.route'
 import { FacilityRoutes } from '../modules/facility/facility.route'
 import { BookingRoutes } from '../modules/booking/booking.route'
+import { CheckAvailabilityRoutes } from '../modules/checkAvailability/checkAvailability.route'
 
 const router = Router()
 
@@ -17,6 +18,10 @@ const moduleRoutes = [
   {
     path: '/bookings',
     route: BookingRoutes,
+  },
+  {
+    path: '/check-availability',
+    route: CheckAvailabilityRoutes,
   },
 ]
 
