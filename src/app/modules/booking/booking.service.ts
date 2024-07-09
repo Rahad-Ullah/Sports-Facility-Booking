@@ -75,11 +75,16 @@ const getBookingsByUserFromDB = async (user: string) => {
 }
 
 // cancel booking
-const cancelBookingFromDB = async (id: string) => {
+const cancelBookingFromDB = async (id: string, userId: string) => {
   // check if the booking is exist
   const isBookingExist = await Booking.findById(id)
   if (!isBookingExist) {
     throw new AppError(httpStatus.BAD_REQUEST, 'This booking is not exist')
+  }
+
+  // check if the user of booking and requested user is same
+  if(!isBookingExist.user.equals(userId)){
+    throw new AppError(httpStatus.UNAUTHORIZED, 'You have no access to this route')
   }
 
   const result = await Booking.findByIdAndUpdate(

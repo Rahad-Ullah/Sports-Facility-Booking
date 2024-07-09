@@ -71,9 +71,10 @@ const getBookingsByUser: RequestHandler = catchAsync(
 // cancel booking
 const cancelBooking: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
+    const {_id: userId} = req.user
     const { id } = req.params
 
-    const result = await BookingServices.cancelBookingFromDB(id)
+    const result = await BookingServices.cancelBookingFromDB(id, userId)
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
