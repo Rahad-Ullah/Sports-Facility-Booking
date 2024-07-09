@@ -83,8 +83,11 @@ const cancelBookingFromDB = async (id: string, userId: string) => {
   }
 
   // check if the user of booking and requested user is same
-  if(!isBookingExist.user.equals(userId)){
-    throw new AppError(httpStatus.UNAUTHORIZED, 'You have no access to this route')
+  if (!isBookingExist.user.equals(userId)) {
+    throw new AppError(
+      httpStatus.UNAUTHORIZED,
+      'This booking is created by others. You can not cancel this booking.',
+    )
   }
 
   const result = await Booking.findByIdAndUpdate(
