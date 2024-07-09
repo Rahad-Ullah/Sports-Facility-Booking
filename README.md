@@ -4,7 +4,10 @@ The Sports Facility Booking Platform allows users to book sports facilities with
 
 ---
 
-**Live Server:** `https://sports-booking-platform.vercel.app`
+ ### [Live Server](https://sports-booking-platform.vercel.app)
+```console
+https://sports-booking-platform.vercel.app
+```
 
 ## Used Technologies:
 
@@ -114,7 +117,7 @@ npm run start:dev
 - Endpoint: `POST /api/facility`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -133,8 +136,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 
 - Endpoint: `PUT /api/facility/:id`
 - Headers:
-
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -154,7 +156,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 - Endpoint: `DELETE /api/facility/:id`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -167,7 +169,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 - Endpoint: `GET /api/check-availability`
 - Query Parameters:
 
-```json
+```markdown
 date=2024-07-09
 ```
 
@@ -176,7 +178,7 @@ date=2024-07-09
 - Endpoint: `POST /api/bookings`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -198,7 +200,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 - Endpoint: `GET /api/bookings`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -207,7 +209,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 - Endpoint: `GET /api/bookings/user`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
@@ -216,7 +218,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 - Endpoint: `DELETE /api/bookings/:id`
 - Headers:
 
-```json
+```markdown
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 

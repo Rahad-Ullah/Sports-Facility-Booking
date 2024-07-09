@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello world. Server is running...')
+  res.send('Sports Facility Booking Server is running...')
 })
 
 // application routes
