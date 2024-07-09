@@ -19,10 +19,18 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     // verify token
-    const decoded = jwt.verify(
-      token as string,
-      config.jwt_access_secret as string,
-    ) as JwtPayload
+    let decoded
+    try {
+      decoded = jwt.verify(
+        token as string,
+        config.jwt_access_secret as string,
+      ) as JwtPayload
+    } catch (error) {
+      throw new AppError(
+        httpStatus.UNAUTHORIZED,
+        'You have no access to this route',
+      )
+    }
 
     const { email, role } = decoded
 

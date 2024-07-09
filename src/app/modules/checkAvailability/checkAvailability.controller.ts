@@ -16,7 +16,7 @@ const checkAvailability: RequestHandler = catchAsync(
       date = req.query?.date as string
     }
 
-    const result = await CheckAvailabilityServices.getBookingsFromDB(date)
+    const result = await CheckAvailabilityServices.checkAvailability(date)
 
     sendResponse(res, {
       success: true,
