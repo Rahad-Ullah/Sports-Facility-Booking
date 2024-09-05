@@ -6,7 +6,7 @@ import { bookingValidation } from './booking.validation'
 
 const router = Router()
 
-// create new facility
+// create new booking
 router.post(
   '/',
   auth('user'),
