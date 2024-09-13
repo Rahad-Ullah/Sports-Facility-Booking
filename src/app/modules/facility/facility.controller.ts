@@ -51,6 +51,31 @@ const deleteFacility: RequestHandler = catchAsync(
 )
 
 // retrieve all facilties
+const getSingleFacility: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const result = await FacilityServices.getSingleFacilityFromDB(id)
+
+    if (!result) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.NOT_FOUND,
+        message: 'No Data Found',
+        data: result,
+      })
+    }
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Facilities retrieved successfully',
+      data: result,
+    })
+  },
+)
+
+// retrieve all facilties
 const getAllFacilities: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const result = await FacilityServices.getAllFacilitiesFromDB()
@@ -76,6 +101,7 @@ const getAllFacilities: RequestHandler = catchAsync(
 export const FacilityControllers = {
   createFacility,
   updateFacility,
+  getSingleFacility,
   getAllFacilities,
   deleteFacility,
 }

@@ -25,6 +25,9 @@ router.put(
 // delete facility
 router.delete('/:id', auth('admin'), FacilityControllers.deleteFacility)
 
+// retrieve single facilities
+router.get('/:id', FacilityControllers.getSingleFacility)
+
 // retrieve all facilities
 router.get('/', FacilityControllers.getAllFacilities)
 
